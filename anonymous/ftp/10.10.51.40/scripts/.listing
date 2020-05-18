@@ -1,0 +1,5 @@
+drwxrwxrwx    2 111      113          4096 May 17 21:30 .
+drwxr-xr-x    3 65534    65534        4096 May 13 19:49 ..
+-rwxr-xrwx    1 1000     1000          314 May 14 14:52 clean.sh
+-rw-rw-r--    1 1000     1000          301 May 18 14:20 removed_files.log
+-rw-r--r--    1 1000     1000           68 May 12 03:50 to_do.txt
