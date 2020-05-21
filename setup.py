@@ -12,12 +12,18 @@ import sys, os, requests, json, re
 
 # check number of args
 if len(sys.argv) < 2:
-    print("Please supply the name of the room! Exitting...", file=sys.stderr)
+    print("Usage: setup.py [URL Extension] {Optional: Name of Directory}", file=sys.stderr)
     exit(code=1)
 
-# First we check if dir exists, and if the data from THM is good
+# Set up URL argument and optional dir arg
+# room = URL : dirname = new directory name
+room=sys.argv[1]
+if len(sys.argv) > 2:
+    dirname=sys.argv[2]
+else:
+    dirname=room
 
-dirname=sys.argv[1]
+# First we check if dir exists, and if the data from THM is good
 # don't do anything if dir exists
 if os.path.isdir(dirname):
     print("Directory already exists! Exitting...", file=sys.stderr)
@@ -26,7 +32,7 @@ if os.path.isdir(dirname):
 thm = "https://tryhackme.com/api/"
 
 # 3) get room data via THM api
-resp = requests.get(thm + "room/" + dirname)
+resp = requests.get(thm + "room/" + room)
 if resp.status_code != 200:
     print("Failed to get room data. Exitting...", file=sys.stderr)
     exit(1)
@@ -36,7 +42,7 @@ if not success:
     print("THM gave an error. Exitting...", file=sys.stderr)
 
 # 4) get the questions via THM api
-resp = requests.get(thm + "tasks/" + dirname)
+resp = requests.get(thm + "tasks/" + room)
 if resp.status_code != 200:
     print("Failed to get question data. Exitting...", file=sys.stderr)
     exit(1)
@@ -61,7 +67,7 @@ tasks = taskData["data"]
 readme.write(
 """# {}
 
-```bash
+```
 export IP=
 ```
 
